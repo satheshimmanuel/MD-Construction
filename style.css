@@ -1,0 +1,833 @@
+:root {
+    --primary-color: #000000;  /* Black */
+    --primary-dark: #111111;
+    --primary-light: #333333;
+    --secondary-color: #f7f7f7;
+    --text-color: #333333;
+    --text-light: #555555;
+    --white: #ffffff;
+    --border-color: #eeeeee;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --transition: all 0.3s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: #f9f9f9; /* Faint grey tint */
+    color: var(--text-color);
+    line-height: 1.6;
+    padding-bottom: 80px; /* Space for mobile sticky footer */
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    font-family: var(--font-heading);
+    color: var(--primary-color);
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Header */
+.site-header {
+    background: var(--white);
+    box-shadow: var(--shadow);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.brand-logo {
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.brand-name {
+    font-size: 1.5rem;
+    line-height: 1.1;
+    border: 1px dashed transparent; /* Editable indicator */
+}
+.brand-name:hover {
+    border-color: #ddd;
+}
+
+.brand-sub {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    font-family: var(--font-body);
+}
+
+.main-nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    margin-left: 2rem;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover, .main-nav a.active {
+    color: var(--primary-color);
+}
+
+/* Hero */
+.hero-section {
+    background: linear-gradient(135deg, var(--white) 0%, #f0f0f0 100%);
+    padding: 4rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Components */
+.btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8rem 1.8rem;
+    border-radius: var(--radius); /* Rounded buttons */
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: var(--transition);
+    text-decoration: none;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+    color: var(--white);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--white);
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: #f5f5f5;
+    transform: translateY(-2px);
+}
+
+.btn-sm {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+}
+
+/* RESPONSIVE TABLE (SCROLL VIEW) */
+@media screen and (max-width: 768px) {
+    /* Revert to standard table display but with scroll */
+    .table-responsive {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .item-table {
+        min-width: 800px; /* Force minimum width to trigger scroll */
+    }
+}
+
+/* Main Content */
+.main-content {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Cards */
+.card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.02);
+}
+
+.card-header {
+    background: var(--primary-color);
+    color: var(--white);
+    padding: 1rem 1.5rem;
+}
+
+.card-header h3 {
+    color: var(--white);
+    font-size: 1.2rem;
+    font-family: var(--font-body);
+    margin: 0;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-footer {
+    padding: 1rem 1.5rem;
+    background: var(--secondary-color);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+
+/* Forms */
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-light);
+}
+
+input, select {
+    padding: 0.9rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: var(--transition);
+    background: #fafafa;
+    color: var(--text-color);
+    width: 100%; /* Default full width in container */
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    background: var(--white);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1); /* Subtle ring */
+}
+
+/* Item Entry Grid */
+.item-input-grid {
+    display: flex;
+    align-items: flex-end; /* Align inputs to bottom with button */
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.item-input-grid .form-group {
+    flex: 1;
+    min-width: 150px;
+}
+
+.item-input-grid .small-input {
+    flex: 0 0 100px;
+}
+
+.action-group {
+    flex: 0 0 auto;
+}
+
+/* Table */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.item-table th {
+    background: #f8f8f8;
+    color: var(--text-light);
+    font-weight: 600;
+    text-align: left;
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+.item-table td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #cc0000;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+/* Totals */
+.totals-section {
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    padding: 1rem 1.5rem;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.grand-total {
+    border-top: 2px solid var(--border-color);
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    font-weight: bold;
+    font-size: 1.4rem;
+    color: var(--primary-color);
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    padding-left: 2.5rem;
+    user-select: none;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+.toggle-switch input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.slider {
+    position: absolute;
+    left: 0;
+    height: 20px;
+    width: 36px;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+    transform: translateX(16px);
+}
+
+
+
+/* Overlay Helper - REMOVED */
+.modal-overlay, .modal-overlay.active {
+    display: none !important;
+}
+
+/* PDF Generation State Override */
+.printable-quotation.generating-pdf {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    z-index: -100 !important; /* Hide behind everything but renderable */
+    width: 210mm !important;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+}
+
+/* Print Styles & Layout (Premium Letterhead) */
+/* Inline Preview Mode */
+.printable-quotation {
+    display: none; /* Hidden until generated */
+    background: white;
+    padding: 0; 
+    margin: 40px auto; /* Centered on page with spacing */
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    width: 95%; /* Responsive width for screen */
+    max-width: 210mm; /* Max A4 width */
+    min-height: 297mm; /* Min A4 Height */
+    position: relative;
+    color: #333;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Remove Modal Specifics */
+.printable-quotation.show-modal {
+    /* No longer modal, just reused class for visibility if needed, 
+       but we will likely toggle display: block via JS */
+    display: block;
+}
+
+.printable-quotation .print-body {
+    padding: 40px;
+}
+
+/* Premium Colored Header (Interior Backdrop Style) */
+.print-header {
+    background: linear-gradient(135deg, #222222 0%, #000000 100%); /* Deep black/dark grey */
+    position: relative;
+    padding: 30px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+/* Decorative Circle Backdrop in Header */
+.print-header::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 70%);
+    border-radius: 50%;
+    z-index: 1;
+}
+
+/* Decorative Line in Header */
+.print-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700); /* Gold accent */
+    z-index: 2;
+}
+
+.print-logo-area { z-index: 2; position: relative; }
+.header-contact { z-index: 2; position: relative; text-align: right; }
+
+.printable-quotation .print-body {
+    padding: 40px;
+    /* Interior Arch Pattern Background */
+    background-image: 
+        radial-gradient(circle at 100% 100%, rgba(0,0,0,0.03) 10%, transparent 10.5%),
+        radial-gradient(circle at 0% 100%, rgba(0,0,0,0.03) 10%, transparent 10.5%),
+        radial-gradient(circle at 100% 0%, rgba(0,0,0,0.03) 10%, transparent 10.5%),
+        radial-gradient(circle at 0% 0%, rgba(0,0,0,0.03) 10%, transparent 10.5%);
+    background-size: 50px 50px;
+    background-position: center;
+}
+
+.print-company-info h2 { 
+    font-family: var(--font-heading);
+    font-size: 28px; 
+    margin-bottom: 8px; 
+    color: white; /* Override default maroon */
+    letter-spacing: 1px;
+}
+.print-company-info p { 
+    margin: 2px 0; 
+    font-size: 13px; 
+    color: rgba(255,255,255,0.85); 
+}
+
+.print-meta {
+    text-align: right;
+    color: white;
+}
+.doc-title { 
+    font-size: 32px; 
+    text-transform: uppercase; 
+    color: rgba(255,255,255,0.2); /* Subtle watermark style title */
+    margin-bottom: 5px;
+    font-weight: 800;
+}
+.print-meta p { margin: 4px 0; font-size: 14px; }
+.print-meta strong { color: rgba(255,255,255,0.9); }
+
+/* Body Content */
+.print-body {
+    padding: 40px;
+}
+
+/* Project Details in Times New Roman */
+.customer-details-grid, #printNotesSection {
+    font-family: "Times New Roman", Times, serif;
+}
+.customer-details-grid h4, #printNotesSection h5 {
+    font-family: "Times New Roman", Times, serif; /* Ensure headers also use it if desired, or keep Playfair? User said "details". Usually entails the text. Playfair is heading. Let's force TNR for this section entirely. */
+}
+
+/* Table Design */
+/* Table Design */
+.print-table { 
+    width: calc(100% + 80px); /* Full width including padding override */
+    margin-left: -40px;
+    margin-right: -40px;
+    border-collapse: collapse; 
+    margin-bottom: 30px; 
+    margin-top: 20px;
+}
+.print-table thead {
+    border-bottom: 2px solid var(--primary-color);
+}
+.print-table th { 
+    background: #f5f5f5; /* Light grey tint */
+    color: var(--primary-color); 
+    padding: 12px 10px; 
+    font-size: 13px; 
+    text-align: left; 
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.print-table td { 
+    padding: 12px 10px; 
+    border-bottom: 1px solid #eee; 
+    font-size: 13px; 
+    vertical-align: top;
+}
+.print-table th:first-child, .print-table td:first-child {
+    padding-left: 40px;
+}
+.print-table th:last-child, .print-table td:last-child {
+    padding-right: 40px;
+}
+.print-table tr:nth-child(even) { background-color: #fafafa; }
+
+.text-right { text-align: right; }
+.print-table th.text-right, .print-table td.text-right {
+    text-align: right;
+}
+
+/* Totals Section */
+.print-totals { 
+    float: right; 
+    width: 45%; 
+    background: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #edd;
+}
+.print-totals .p-row { 
+    display: flex; 
+    justify-content: space-between; 
+    padding: 6px 0; 
+    font-size: 14px; 
+    color: #555;
+}
+.print-totals .total { 
+    font-weight: bold; 
+    border-top: 2px solid var(--primary-color); 
+    padding-top: 10px; 
+    margin-top: 5px;
+    font-size: 18px; 
+    color: var(--primary-color); 
+}
+
+/* Footer & Terms */
+.print-footer { 
+    clear: both;
+    margin-top: 60px; 
+    border-top: 1px solid #ddd; 
+    padding-top: 30px; 
+    display: flex;
+    justify-content: space-between;
+}
+.terms { 
+    width: 60%; 
+    font-size: 12px; 
+    color: #666; 
+}
+.terms h4 { margin-bottom: 8px; color: var(--primary-color); font-size: 14px; }
+.terms ul { margin-left: 20px; line-height: 1.5; }
+
+.signature-area { 
+    width: 30%;
+    text-align: center; 
+    position: relative; /* For absolute pos if needed, but flex/block is fine */
+    margin-left: auto; /* Push to right */
+    margin-top: 40px;
+}
+.signature-img {
+    height: 70px;
+    width: auto;
+    display: block;
+    margin: 0 auto -25px auto; /* Pull down to overlap line */
+    position: relative;
+    z-index: 10;
+}
+.signature-area .line { 
+    width: 100%; 
+    height: 1px; 
+    background: #333; 
+    margin: 30px 0 10px 0; /* Reduced top margin, enough for image height minus overlap */
+}
+.signature-area p { font-size: 13px; font-weight: 500; }
+
+/* Sticky Footer (Mobile) */
+.mobile-sticky-footer {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    padding: 10px 20px;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+}
+
+.site-footer {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+.dim { opacity: 0.6; font-size: 0.8rem; }
+
+/* Preview Controls */
+.preview-controls {
+    text-align: right;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    display: none; /* Only show in modal view */
+}
+
+/* RESPONSIVE */
+@media screen and (max-width: 1024px) {
+    .container { width: 95%; }
+}
+
+@media screen and (max-width: 768px) {
+    .header-container { flex-direction: column; gap: 1rem; }
+    
+    .main-nav { 
+        margin-top: 0.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+    .main-nav a { margin: 0 0.5rem; font-size: 0.95rem; }
+    
+    .hero-section { padding: 2rem 0; }
+    .hero-content h2 { font-size: 1.8rem; }
+    
+    /* Stack Grid Forms */
+    .grid-2 { grid-template-columns: 1fr; gap: 1rem; }
+    
+    /* Item Input Card */
+    .item-input-grid { 
+        flex-direction: column; 
+        align-items: stretch; 
+        gap: 0.8rem;
+    }
+    .item-input-grid .form-group, 
+    .item-input-grid .small-input,
+    .item-input-grid .action-group { 
+        width: 100%; 
+        min-width: 0; 
+        flex: auto;
+    }
+    
+    .item-input-grid .action-group button { 
+        width: 100%; 
+        justify-content: center;
+    }
+    
+    /* Totals */
+    .totals-section { 
+        padding: 1rem 0; 
+        max-width: 100%;
+    }
+    
+    /* Sticky Footer */
+    .mobile-sticky-footer { display: flex; }
+    
+    /* Card Footer Buttons */
+    .card-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    .card-footer button { width: 100%; }
+
+    /* Printable Preview on Mobile */
+    .printable-quotation {
+        width: 100%;
+        min-width: 700px; /* Keep A4 structure */
+        transform-origin: top left;
+        overflow-x: auto; /* Scroll horizontally */
+        margin: 20px 0;
+        box-shadow: none;
+        border: 1px solid #eee;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    body { font-size: 15px; }
+    
+    .logo-area { 
+        flex-direction: column; 
+        text-align: center; 
+        gap: 0.5rem;
+    }
+    
+    .brand-logo { width: 40px; height: 40px; font-size: 1rem; }
+    .brand-name { font-size: 1.3rem; }
+    
+    .hero-content h2 { font-size: 1.6rem; margin-bottom: 0.5rem; }
+    .hero-content p { font-size: 0.9rem; }
+    
+    .card-header { padding: 0.8rem 1rem; }
+    .card-body { padding: 1rem; }
+    
+    .table-responsive {
+        margin: 0 -1rem; /* Negative margin to let table touch edges */
+        padding: 0 1rem;
+        width: calc(100% + 2rem);
+    }
+    
+    /* Notes Section specifically for mobile */
+    .form-group div[style*="display: flex"] {
+        flex-direction: column;
+    }
+    #noteInput { margin-bottom: 0.5rem; }
+    #addNoteBtn { width: 100% !important; }
+    
+    /* Sticky Footer Adjustments */
+    .mobile-sticky-footer { flex-direction: row; gap: 10px; padding: 10px 15px; }
+    .mobile-sticky-footer .mini-total { font-size: 0.9rem; }
+    .mobile-sticky-footer button { flex: 1; padding: 0.5rem; }
+}
+
+/* NATIVE PRINT STYLES (window.print) */
+@media print {
+    /* Hide everything by default */
+    body * {
+        visibility: hidden;
+    }
+    
+    /* Hide UI elements specifically to be safe */
+    .site-header, .hero-section, .main-content, .site-footer, .mobile-sticky-footer, .modal-overlay, .preview-controls {
+        display: none !important;
+    }
+
+    /* Show only the printable area */
+    #printableArea, #printableArea * {
+        visibility: visible;
+    }
+
+    /* Position the printable area */
+    #printableArea {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none; /* No border in print */
+        box-shadow: none;
+        background: white;
+    }
+
+    /* Reset Body */
+    body {
+        margin: 0;
+        padding: 0;
+        background: white;
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact; /* Force render colors */
+    }
+    
+    /* Ensure Layout fits A4 */
+    .print-header {
+        background-color: var(--primary-color) !important;
+        color: white !important;
+        -webkit-print-color-adjust: exact;
+    }
+    
+    .print-table th {
+        background-color: #fcf0f2 !important;
+        -webkit-print-color-adjust: exact;
+    }
+    
+    .print-totals {
+        background-color: #fcf0f2 !important;
+        -webkit-print-color-adjust: exact;
+    }
+}

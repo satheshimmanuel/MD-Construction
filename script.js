@@ -22,9 +22,11 @@ const elements = {
     customerName: document.getElementById('customerName'),
     customerId: document.getElementById('customerId'),
     customerPhone: document.getElementById('customerPhone'),
+    phoneError: document.getElementById('phoneError'),
     customerGst: document.getElementById('customerGst'),
     projectLocation: document.getElementById('projectLocation'),
     customerPincode: document.getElementById('customerPincode'),
+    pincodeError: document.getElementById('pincodeError'),
     quotationDate: document.getElementById('quotationDate'),
     estTime: document.getElementById('estTime'),
     documentType: document.getElementById('documentType'),
@@ -145,10 +147,141 @@ function setupEventListeners() {
     // Allow 'Enter' key in inputs to trigger Add Item
     const inputs = [elements.sqFtInput, elements.rateInput, elements.floorInput];
     inputs.forEach(input => {
+        if (input) {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') addItem();
+            });
+        }
+    });
+
+    // Setup input validations (phone, pincode, sqft, rate)
+    setupInputValidations();
+}
+
+// Input Validations
+function setupInputValidations() {
+    // 1. Phone Number Validation (10 digits only, numbers only)
+    if (elements.customerPhone) {
+        elements.customerPhone.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length > 10) val = val.slice(0, 10);
+            e.target.value = val;
+            validatePhoneField();
+        });
+
+        elements.customerPhone.addEventListener('keypress', (e) => {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        elements.customerPhone.addEventListener('blur', validatePhoneField);
+    }
+
+    // 2. Pincode Validation (6 digits only, numbers only)
+    if (elements.customerPincode) {
+        elements.customerPincode.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/\D/g, '');
+            if (val.length > 6) val = val.slice(0, 6);
+            e.target.value = val;
+            validatePincodeField();
+        });
+
+        elements.customerPincode.addEventListener('keypress', (e) => {
+            if (!/[0-9]/.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+
+        elements.customerPincode.addEventListener('blur', validatePincodeField);
+    }
+
+    // 3. Sq Ft & Rate Inputs (Text inputs, allow numbers only)
+    const numericInputs = [elements.sqFtInput, elements.rateInput];
+    numericInputs.forEach(input => {
+        if (!input) return;
+
+        input.addEventListener('input', (e) => {
+            let val = e.target.value.replace(/[^0-9.]/g, '');
+            // Only allow single decimal point
+            const parts = val.split('.');
+            if (parts.length > 2) {
+                val = parts[0] + '.' + parts.slice(1).join('');
+            }
+            e.target.value = val;
+        });
+
         input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') addItem();
+            // Allow 0-9
+            if (/[0-9]/.test(e.key)) return;
+            // Allow single '.' if not already present
+            if (e.key === '.' && !e.target.value.includes('.')) return;
+            // Disallow all other characters
+            e.preventDefault();
         });
     });
+}
+
+function validatePhoneField() {
+    if (!elements.customerPhone) return true;
+    const val = elements.customerPhone.value.trim();
+    const errorEl = elements.phoneError;
+
+    if (val.length === 0) {
+        elements.customerPhone.classList.remove('input-error', 'input-success');
+        if (errorEl) errorEl.textContent = '';
+        return true;
+    }
+
+    if (val.length !== 10) {
+        elements.customerPhone.classList.add('input-error');
+        elements.customerPhone.classList.remove('input-success');
+        if (errorEl) errorEl.textContent = `Phone number must be 10 digits (${val.length}/10)`;
+        return false;
+    }
+
+    elements.customerPhone.classList.remove('input-error');
+    elements.customerPhone.classList.add('input-success');
+    if (errorEl) errorEl.textContent = '';
+    return true;
+}
+
+function validatePincodeField() {
+    if (!elements.customerPincode) return true;
+    const val = elements.customerPincode.value.trim();
+    const errorEl = elements.pincodeError;
+
+    if (val.length === 0) {
+        elements.customerPincode.classList.remove('input-error', 'input-success');
+        if (errorEl) errorEl.textContent = '';
+        return true;
+    }
+
+    if (val.length !== 6) {
+        elements.customerPincode.classList.add('input-error');
+        elements.customerPincode.classList.remove('input-success');
+        if (errorEl) errorEl.textContent = `Pincode must be 6 digits (${val.length}/6)`;
+        return false;
+    }
+
+    elements.customerPincode.classList.remove('input-error');
+    elements.customerPincode.classList.add('input-success');
+    if (errorEl) errorEl.textContent = '';
+    return true;
+}
+
+function validateFormBeforePrint() {
+    if (!validatePhoneField()) {
+        alert("Please enter a valid 10-digit Phone Number.");
+        elements.customerPhone.focus();
+        return false;
+    }
+    if (!validatePincodeField()) {
+        alert("Please enter a valid 6-digit Pincode.");
+        elements.customerPincode.focus();
+        return false;
+    }
+    return true;
 }
 
 // Note Logic
@@ -228,23 +361,27 @@ function renderTerms() {
 // 4. Add Item Logic
 function addItem() {
     // Get Values
-    const workType = elements.workTypeInput.value;
-    const material = elements.materialInput.value;
-    const floor = elements.floorInput.value || "-";
-    const sqFt = parseFloat(elements.sqFtInput.value);
-    const rate = parseFloat(elements.rateInput.value);
+    const workType = elements.workTypeInput.value.trim();
+    const material = elements.materialInput.value.trim();
+    const floor = elements.floorInput.value.trim() || "-";
+    const sqFtStr = elements.sqFtInput.value.trim();
+    const rateStr = elements.rateInput.value.trim();
+    const sqFt = parseFloat(sqFtStr);
+    const rate = parseFloat(rateStr);
 
     // Validation
     if (!workType || !material) {
         alert("Please select both Work Type and Material.");
         return;
     }
-    if (!sqFt || sqFt <= 0) {
-        alert("Please enter a valid Square Feet value.");
+    if (!sqFtStr || isNaN(sqFt) || sqFt <= 0) {
+        alert("Please enter a valid numeric Square Feet value.");
+        elements.sqFtInput.focus();
         return;
     }
-    if (!rate || rate <= 0) {
-        alert("Please enter a valid Rate.");
+    if (!rateStr || isNaN(rate) || rate <= 0) {
+        alert("Please enter a valid numeric Rate.");
+        elements.rateInput.focus();
         return;
     }
 
@@ -435,6 +572,10 @@ function togglePreview() {
         return;
     }
 
+    if (!validateFormBeforePrint()) {
+        return;
+    }
+
     updatePrintView();
 
     // Show Inline
@@ -456,10 +597,14 @@ function generatePDF() {
         return;
     }
 
+    if (!validateFormBeforePrint()) {
+        return;
+    }
+
     updatePrintView(); // Ensure data is fresh
 
     // We rely on @media print CSS to hide everything else and show only the quotation.
-    // The br owser's native print dialog will appear.
+    // The browser's native print dialog will appear.
     // User can select "Save as PDF" from there.
 
     window.print();

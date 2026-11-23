@@ -477,14 +477,7 @@ input:checked + .slider:before {
 
 .printable-quotation .print-body {
     padding: 40px;
-    /* Interior Arch Pattern Background */
-    background-image: 
-        radial-gradient(circle at 100% 100%, rgba(0,0,0,0.03) 10%, transparent 10.5%),
-        radial-gradient(circle at 0% 100%, rgba(0,0,0,0.03) 10%, transparent 10.5%),
-        radial-gradient(circle at 100% 0%, rgba(0,0,0,0.03) 10%, transparent 10.5%),
-        radial-gradient(circle at 0% 0%, rgba(0,0,0,0.03) 10%, transparent 10.5%);
-    background-size: 50px 50px;
-    background-position: center;
+    background: #ffffff;
 }
 
 .print-company-info h2 { 
@@ -610,28 +603,96 @@ input:checked + .slider:before {
 .terms h4 { margin-bottom: 8px; color: var(--primary-color); font-size: 14px; }
 .terms ul { margin-left: 20px; line-height: 1.5; }
 
-.signature-area { 
-    width: 30%;
-    text-align: center; 
-    position: relative; /* For absolute pos if needed, but flex/block is fine */
-    margin-left: auto; /* Push to right */
-    margin-top: 40px;
+.print-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 35px;
+    padding-top: 10px;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
-.signature-img {
-    height: 70px;
+
+.seal-area {
+    width: 260px;
+    text-align: left;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 5px;
+}
+
+.company-seal-img {
+    height: 80px;
     width: auto;
-    display: block;
-    margin: 0 auto -25px auto; /* Pull down to overlap line */
-    position: relative;
-    z-index: 10;
+    max-width: 250px;
+    object-fit: contain;
+    opacity: 0.95;
+    transform: rotate(-1deg);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
 }
+
+.signature-area { 
+    width: 250px;
+    text-align: center; 
+    position: relative;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.muthu-sign-img {
+    height: 60px;
+    width: auto;
+    max-width: 200px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
 .signature-area .line { 
     width: 100%; 
-    height: 1px; 
-    background: #333; 
-    margin: 30px 0 10px 0; /* Reduced top margin, enough for image height minus overlap */
+    height: 1.5px; 
+    background: #222; 
+    margin: 8px 0 6px 0;
 }
-.signature-area p { font-size: 13px; font-weight: 500; }
+
+.signature-area .sign-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #222;
+    margin: 0 0 2px 0;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.signature-area .company-sign-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #555;
+    margin: 0;
+}
+
+/* Form Validation Feedback */
+.input-error {
+    border-color: #e53e3e !important;
+    background-color: #fff8f8 !important;
+    box-shadow: 0 0 0 1px #e53e3e !important;
+}
+
+.input-success {
+    border-color: #38a169 !important;
+}
+
+.field-error-text {
+    display: block;
+    font-size: 11px;
+    color: #e53e3e;
+    margin-top: 4px;
+    font-weight: 500;
+    min-height: 14px;
+}
 
 /* Sticky Footer (Mobile) */
 .mobile-sticky-footer {
@@ -829,5 +890,16 @@ input:checked + .slider:before {
     .print-totals {
         background-color: #fcf0f2 !important;
         -webkit-print-color-adjust: exact;
+    }
+
+    .print-bottom-row,
+    .signature-area,
+    .seal-area {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+    .company-seal-img, .muthu-sign-img {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
 }

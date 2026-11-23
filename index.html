@@ -6,7 +6,7 @@
     <title>MD Construction & Interior</title>
     
     <!-- Google Fonts -->
-    <link rel="icon" href="MdConstructionlogo.png" type="image/png">
+    <link rel="icon" href="assets/MdConstructionlogo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -24,11 +24,11 @@
             <div class="logo-area">
                 <!-- Using a text fallback if image is missing, style will handle it -->
                 <div class="brand-logo" id="brandLogo" style="background: none; width: auto; height: auto;">
-                    <img src="MdConstructionlogo.png" alt="MD Construction Logo" style="height: 60px; width: auto;">
+                    <img src="assets/MdConstructionlogo.png" alt="MD Construction Logo" style="height: 60px; width: auto;">
                 </div>
                 <div class="brand-text">
                     <h1 class="brand-name" contenteditable="true">MD Construction & Interior</h1>
-                    <p class="brand-sub">Built to Last, Designed to Impress...</p>
+                    <p class="brand-sub">Built to Last, Designed to Impress... &bull; <strong style="color: var(--primary-color);">GSTIN: 33BUPPM8479P1ZF</strong></p>
                 </div>
             </div>
             <nav class="main-nav">
@@ -74,7 +74,8 @@
                 </div>
                 <div class="form-group">
                     <label for="customerPhone">Phone Number</label>
-                    <input type="tel" id="customerPhone" placeholder="Optional">
+                    <input type="tel" id="customerPhone" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
+                    <span class="field-error-text" id="phoneError"></span>
                 </div>
                 <div class="form-group">
                     <label for="customerGst">Customer GST No.</label>
@@ -86,7 +87,8 @@
                 </div>
                 <div class="form-group">
                     <label for="customerPincode">Pincode</label>
-                    <input type="text" id="customerPincode" placeholder="e.g. 560001">
+                    <input type="text" id="customerPincode" placeholder="6-digit pincode" maxlength="6" inputmode="numeric">
+                    <span class="field-error-text" id="pincodeError"></span>
                 </div>
                 <div class="form-group">
                     <label for="quotationDate">Date</label>
@@ -119,11 +121,11 @@
                     </div>
                     <div class="form-group small-input">
                         <label>Sq. Feet</label>
-                        <input type="number" id="sqFtInput" placeholder="0" min="0">
+                        <input type="text" id="sqFtInput" placeholder="0" inputmode="decimal">
                     </div>
                     <div class="form-group small-input">
                         <label>Rate / Sq.ft</label>
-                        <input type="number" id="rateInput" placeholder="0" min="0">
+                        <input type="text" id="rateInput" placeholder="0" inputmode="decimal">
                     </div>
                     <div class="form-group action-group">
                         <button type="button" id="addItemBtn" class="btn btn-primary with-icon">
@@ -227,83 +229,87 @@
         </div>
         <div class="print-header">
             <div class="print-logo-area" style="display:flex; align-items:center; gap: 20px; width: 100%; justify-content: center; position: relative;">
-                <img src="MdConstructionlogo.png" alt="Logo" style="height: 90px; width: auto; z-index: 10;">
+                <img src="assets/MdConstructionlogo.png" alt="Logo" style="height: 90px; width: auto; z-index: 10;">
                 <div class="print-company-info" style="display: flex; flex-direction: column; justify-content: center; text-align: left;">
                     <h2 class="company-name-print" style="white-space: nowrap; font-size: 28px; letter-spacing: 1px; margin: 0 0 5px 0; font-weight: 700;">MD CONSTRUCTION & INTERIOR</h2>
                     <div class="company-details" style="font-size: 13px; opacity: 0.95; line-height: 1.4;">
                         <p style="margin:0; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; margin-bottom: 5px;">Built to Last, Designed to Impress...</p>
                         <p style="margin:0;">J. MUTHU RAJ &bull; Tenkasi</p>
                         <p style="margin:0;">Phone: 9361789330, 8098124812 &bull; Email: mdconstructiontenkasi@gmail.com</p>
+                        <p style="margin:0; font-weight: 700; letter-spacing: 0.5px;">GSTIN: 33BUPPM8479P1ZF</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div class="print-body" style="position: relative;">
-            <div class="print-watermark" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; background-image: url('MdConstructionlogo.png'); background-size: contain; background-repeat: no-repeat; background-position: center; mix-blend-mode: multiply;"></div>
+            <div class="print-watermark" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.05; pointer-events: none; background-image: url('assets/MdConstructionlogo.png'); background-size: contain; background-repeat: no-repeat; background-position: center; mix-blend-mode: multiply;"></div>
             <div style="position: relative; z-index: 1;">
-            <div class="customer-details-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 30px; border: 2px solid var(--primary-light); background: rgba(255,255,255,0.95); border-radius: 0;">
-                <div class="customer-left" style="padding: 20px; border-right: 1px solid #eee;">
-                    <h4 id="printDocTypeLabel" style="color: var(--primary-color); margin-bottom: 15px; text-transform: uppercase; font-size: 0.9em; letter-spacing: 1px;">Quotation For</h4>
-                    <p style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px;"><span id="printCustomerName"></span></p>
-                    <p style="margin-bottom: 3px;"><strong>Phone:</strong> <span id="printCustomerPhone"></span></p>
-                    <p><strong>Site:</strong> <span id="printProject"></span>, <span id="printCustomerPincode"></span></p>
-                </div>
-                <div class="customer-right" style="padding: 20px; background: rgba(var(--primary-rgb), 0.02);">
-                    <h4 style="color: var(--primary-color); margin-bottom: 15px; text-transform: uppercase; font-size: 0.9em; letter-spacing: 1px;">Reference Details</h4>
-                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px 15px; font-size: 0.95em;">
-                        <strong>Date:</strong> <span id="printDate"></span>
-                        <strong>Est. Time:</strong> <span id="printEstTime"></span>
-                        <strong>Ref ID:</strong> <span id="printCustomerId"></span>
-                        <strong>GST No:</strong> <span id="printCustomerGst"></span>
+                <div class="customer-details-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-bottom: 30px; border: 2px solid var(--primary-light); background: rgba(255,255,255,0.95); border-radius: 0;">
+                    <div class="customer-left" style="padding: 20px; border-right: 1px solid #eee;">
+                        <h4 id="printDocTypeLabel" style="color: var(--primary-color); margin-bottom: 15px; text-transform: uppercase; font-size: 0.9em; letter-spacing: 1px;">Quotation For</h4>
+                        <p style="font-size: 1.2em; font-weight: bold; margin-bottom: 5px;"><span id="printCustomerName"></span></p>
+                        <p style="margin-bottom: 3px;"><strong>Phone:</strong> <span id="printCustomerPhone"></span></p>
+                        <p><strong>Site:</strong> <span id="printProject"></span>, <span id="printCustomerPincode"></span></p>
+                    </div>
+                    <div class="customer-right" style="padding: 20px; background: rgba(var(--primary-rgb), 0.02);">
+                        <h4 style="color: var(--primary-color); margin-bottom: 15px; text-transform: uppercase; font-size: 0.9em; letter-spacing: 1px;">Reference Details</h4>
+                        <div style="display: grid; grid-template-columns: auto 1fr; gap: 8px 15px; font-size: 0.95em;">
+                            <strong>Date:</strong> <span id="printDate"></span>
+                            <strong>Est. Time:</strong> <span id="printEstTime"></span>
+                            <strong>Ref ID:</strong> <span id="printCustomerId"></span>
+                            <strong>GST No:</strong> <span id="printCustomerGst"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-                </div>
-            </div>
-
-            <div id="printNotesSection" style="margin-bottom: 20px; display: none;">
-                <h5 style="color: var(--primary-color); border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; font-weight: 600;">Project Scope/Project Details:</h5>
-                <ul id="printNotesList" style="padding-left: 20px; color: #444; line-height: 1.5; font-size: 0.95em;">
-                </ul>
-            </div>
-
-            <table class="print-table">
-                <thead>
-                    <tr>
-                        <th style="width: 3%;">S.No</th>
-                        <th style="width: 35%;">Work Type</th>
-                        <th style="width: 20%;">Material/Spec</th>
-                        <th style="width: 7%;">Floor/Space</th>
-                        <th class="text-right" style="width: 10%;">Area</th>
-                        <th class="text-right" style="width: 10%;">Rate</th> 
-                        <th class="text-right" style="width: 15%;">Amount</th>
-                    </tr>
-                </thead>
-                <tbody id="printTableBody">
-                </tbody>
-            </table>
-            
-            <div class="print-footer">
-                <div class="terms">
-                    <h4>Terms & Conditions</h4>
-                    <ul id="printTermsList">
-                        <!-- Terms will be rendered here dynamically -->
+                <div id="printNotesSection" style="margin-bottom: 20px; display: none;">
+                    <h5 style="color: var(--primary-color); border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; font-weight: 600;">Project Scope/Project Details:</h5>
+                    <ul id="printNotesList" style="padding-left: 20px; color: #444; line-height: 1.5; font-size: 0.95em;">
                     </ul>
                 </div>
-                <div class="print-totals">
-                    <div class="p-row"><span>Sub Total:</span> <span id="printSubTotal">0</span></div>
-                    <div class="p-row" id="printGstRow"><span>GST (18%):</span> <span id="printGst">0</span></div>
-                    <div class="p-row total"><span>Grand Total:</span> <span id="printGrandTotal">0</span></div>
+
+                <table class="print-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 3%;">S.No</th>
+                            <th style="width: 35%;">Work Type</th>
+                            <th style="width: 20%;">Material/Spec</th>
+                            <th style="width: 7%;">Floor/Space</th>
+                            <th class="text-right" style="width: 10%;">Area</th>
+                            <th class="text-right" style="width: 10%;">Rate</th> 
+                            <th class="text-right" style="width: 15%;">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="printTableBody">
+                    </tbody>
+                </table>
+                
+                <div class="print-footer">
+                    <div class="terms">
+                        <h4>Terms & Conditions</h4>
+                        <ul id="printTermsList">
+                            <!-- Terms will be rendered here dynamically -->
+                        </ul>
+                    </div>
+                    <div class="print-totals">
+                        <div class="p-row"><span>Sub Total:</span> <span id="printSubTotal">0</span></div>
+                        <div class="p-row" id="printGstRow"><span>GST (18%):</span> <span id="printGst">0</span></div>
+                        <div class="p-row total"><span>Grand Total:</span> <span id="printGrandTotal">0</span></div>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="signature-area">
-                <!-- <img src="signature.png" alt="Signature" class="signature-img"> -->
-                <div class="line" style="margin-top: 50px;"></div>
-                <p>Authorized Signature</p>
-                <p>MD Construction & Interior</p>
+                
+                <div class="print-bottom-row">
+                    <div class="seal-area">
+                        <img src="assets/seal.png" alt="Company Seal" class="company-seal-img">
+                    </div>
+                    <div class="signature-area">
+                        <img src="assets/muthu-sign.png" alt="Authorized Signature" class="muthu-sign-img">
+                        <div class="line"></div>
+                        <p class="sign-label">Authorized Signature</p>
+                        <p class="company-sign-title">MD Construction & Interior</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -321,6 +327,7 @@
     <footer class="site-footer">
         <div class="container">
             <p>&copy; 2024 MD Construction & Interior. All Rights Reserved.</p>
+            <p style="margin: 4px 0; font-weight: 600; letter-spacing: 0.5px;">GSTIN: 33BUPPM8479P1ZF</p>
             <p class="dim">Generated Digitally</p>
         </div>
     </footer>

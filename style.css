@@ -605,7 +605,7 @@ input:checked + .slider:before {
 
 .print-bottom-row {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: flex-end;
     margin-top: 35px;
     padding-top: 10px;
@@ -613,38 +613,41 @@ input:checked + .slider:before {
     break-inside: avoid;
 }
 
-.seal-area {
-    width: 260px;
-    text-align: left;
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 5px;
-}
-
-.company-seal-img {
-    height: 80px;
-    width: auto;
-    max-width: 250px;
-    object-fit: contain;
-    opacity: 0.95;
-    transform: rotate(-1deg);
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-}
-
 .signature-area { 
-    width: 250px;
+    width: 260px;
     text-align: center; 
     position: relative;
     page-break-inside: avoid;
     break-inside: avoid;
 }
 
+.sign-seal-stacked {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
 .muthu-sign-img {
-    height: 60px;
+    height: 55px;
     width: auto;
-    max-width: 200px;
+    max-width: 190px;
     object-fit: contain;
+    display: block;
+    margin: 0 auto;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+.company-seal-img {
+    height: 75px;
+    width: auto;
+    max-width: 230px;
+    object-fit: contain;
+    opacity: 0.95;
+    transform: rotate(-1deg);
     display: block;
     margin: 0 auto;
     -webkit-print-color-adjust: exact;
@@ -852,6 +855,11 @@ input:checked + .slider:before {
         visibility: visible;
     }
 
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
     /* Position the printable area */
     #printableArea {
         display: block !important;
@@ -894,7 +902,7 @@ input:checked + .slider:before {
 
     .print-bottom-row,
     .signature-area,
-    .seal-area {
+    .sign-seal-stacked {
         page-break-inside: avoid;
         break-inside: avoid;
     }

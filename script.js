@@ -96,8 +96,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // 1. Initialize Date
 function initDate() {
-    const today = new Date().toISOString().split('T')[0];
-    elements.quotationDate.value = today;
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    elements.quotationDate.value = `${yyyy}-${mm}-${dd}`;
+}
+
+// Format Date as DD-MM-YYYY
+function formatDateDDMMYYYY(dateStr) {
+    if (!dateStr) return "-";
+    const parts = dateStr.split('-');
+    if (parts.length === 3) {
+        if (parts[0].length === 4) {
+            // YYYY-MM-DD -> DD-MM-YYYY
+            return `${parts[2]}-${parts[1]}-${parts[0]}`;
+        }
+        return dateStr;
+    }
+    const d = new Date(dateStr);
+    if (!isNaN(d.getTime())) {
+        const dd = String(d.getDate()).padStart(2, '0');
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const yyyy = d.getFullYear();
+        return `${dd}-${mm}-${yyyy}`;
+    }
+    return dateStr;
 }
 
 // 2. Setup Dropdowns (Removed)
@@ -490,10 +514,10 @@ function formatCurrency(amount) {
 
 function updatePrintView() {
     // Fill Meta Data
-    elements.printDate.textContent = elements.quotationDate.value;
-    elements.printEstTime.textContent = elements.estTime.value || "TBD";
+    elements.printDate.textContent = formatDateDDMMYYYY(elements.quotationDate.value) || "-";
+    elements.printEstTime.textContent = (elements.estTime.value || "").trim() || "-";
 
-    elements.printCustomerName.textContent = elements.customerName.value || "Valued Customer";
+    elements.printCustomerName.textContent = (elements.customerName.value || "").trim() || "-";
     
     if (elements.printDocTypeLabel) {
         const docTypeValue = elements.documentType.value || "Quotation";
@@ -508,16 +532,25 @@ function updatePrintView() {
         elements.printValidityTerm.textContent = `Validity: This ${docType} is valid for 15 days.`;
     }
 
-    // New Fields in Body
+    // Customer Fields
     const printCustomerPhone = document.getElementById('printCustomerPhone');
-    if (printCustomerPhone) printCustomerPhone.textContent = elements.customerPhone.value || "-";
+    if (printCustomerPhone) printCustomerPhone.textContent = (elements.customerPhone.value || "").trim() || "-";
 
-    elements.printCustomerId.textContent = elements.customerId.value || "-";
-    elements.printCustomerGst.textContent = elements.customerGst.value || "-";
+    elements.printCustomerId.textContent = (elements.customerId.value || "").trim() || "-";
+    elements.printCustomerGst.textContent = (elements.customerGst.value || "").trim() || "-";
 
-    elements.printProject.textContent = elements.projectLocation.value || "Site Location";
-    const printCustomerPincode = document.getElementById('printCustomerPincode');
-    if (printCustomerPincode) printCustomerPincode.textContent = elements.customerPincode.value ? ` - ${elements.customerPincode.value}` : "";
+    // Site Location
+    const siteVal = (elements.projectLocation.value || "").trim();
+    const pinVal = (elements.customerPincode.value || "").trim();
+    if (siteVal && pinVal) {
+        elements.printProject.textContent = `${siteVal}, ${pinVal}`;
+    } else if (siteVal) {
+        elements.printProject.textContent = siteVal;
+    } else if (pinVal) {
+        elements.printProject.textContent = pinVal;
+    } else {
+        elements.printProject.textContent = "-";
+    }
 
     // Fill Table
     elements.printTableBody.innerHTML = '';
